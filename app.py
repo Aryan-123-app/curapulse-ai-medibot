@@ -9,6 +9,10 @@ import os
 import sys
 import base64
 import textwrap
+
+# Ensure project root is in sys.path for robust cloud deployments
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 import streamlit as st
 from dotenv import load_dotenv
 

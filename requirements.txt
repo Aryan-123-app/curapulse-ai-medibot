@@ -18,5 +18,5 @@ sentence-transformers>=3.0.0
 pinecone>=5.0.0
 langchain-pinecone>=0.2.0
 
-# Package installation in editable mode
--e .
+# Package installation in editable mode (optional for local development)
+# -e .
