@@ -91,14 +91,17 @@ st.markdown("""
 
 def get_secret(key: str, default: str = "") -> str:
     """Helper to retrieve credentials from st.secrets or os.environ."""
+    val = default
     if key in os.environ and os.environ[key]:
-        return os.environ[key]
-    try:
-        if key in st.secrets:
-            return st.secrets[key]
-    except Exception:
-        pass
-    return default
+        val = os.environ[key]
+    else:
+        try:
+            if key in st.secrets:
+                val = st.secrets[key]
+        except Exception:
+            pass
+    return str(val).strip() if val else default
+
 
 
 # Retrieve credentials

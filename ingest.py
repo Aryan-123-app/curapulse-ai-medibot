@@ -56,7 +56,7 @@ def ingest_to_chroma(chunks, embeddings, persist_dir: str = "vectorstore"):
 
 def ingest_to_pinecone(chunks, embeddings, index_name: str = "curapulse-medical"):
     """Indexes chunks into a Pinecone cloud vector database."""
-    api_key = os.getenv("PINECONE_API_KEY")
+    api_key = os.getenv("PINECONE_API_KEY", "").strip()
     if not api_key:
         print("Error: PINECONE_API_KEY environment variable is missing in .env.")
         sys.exit(1)
