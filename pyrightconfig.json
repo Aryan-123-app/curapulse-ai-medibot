@@ -1,0 +1,9 @@
+{
+  "venvPath": "C:\\Users\\LENOVO\\miniconda3\\envs",
+  "venv": "medibot",
+  "pythonVersion": "3.10",
+  "extraPaths": [
+    "C:\\Users\\LENOVO\\miniconda3\\envs\\medibot\\Lib\\site-packages",
+    "."
+  ]
+}

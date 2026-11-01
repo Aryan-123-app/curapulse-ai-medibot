@@ -1,0 +1,12 @@
+{
+    "python.defaultInterpreterPath": "C:\\Users\\LENOVO\\miniconda3\\envs\\medibot\\python.exe",
+    "python.pythonPath": "C:\\Users\\LENOVO\\miniconda3\\envs\\medibot\\python.exe",
+    "python.analysis.extraPaths": [
+        "C:\\Users\\LENOVO\\miniconda3\\envs\\medibot\\Lib\\site-packages",
+        "${workspaceFolder}"
+    ],
+    "python.autoComplete.extraPaths": [
+        "C:\\Users\\LENOVO\\miniconda3\\envs\\medibot\\Lib\\site-packages",
+        "${workspaceFolder}"
+    ]
+}
