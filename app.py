@@ -141,9 +141,10 @@ with st.sidebar:
     # Model selection
     gemini_model_choice = st.selectbox(
         "Gemini Model",
-        options=["gemini-2.5-pro", "gemini-1.5-pro", "gemini-1.5-flash"],
+        options=["gemini-2.5-flash-lite", "gemini-3.5-flash", "gemini-3-flash-preview"],
         index=0
     )
+
     
     st.markdown("---")
     
@@ -298,9 +299,14 @@ if user_prompt:
     with st.chat_message("assistant", avatar="🩺"):
         from langchain_google_genai import ChatGoogleGenerativeAI
         from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-        from langchain.chains import create_history_aware_retriever, create_retrieval_chain
-        from langchain.chains.combine_documents import create_stuff_documents_chain
+        try:
+            from langchain.chains import create_history_aware_retriever, create_retrieval_chain
+            from langchain.chains.combine_documents import create_stuff_documents_chain
+        except ImportError:
+            from langchain_classic.chains import create_history_aware_retriever, create_retrieval_chain
+            from langchain_classic.chains.combine_documents import create_stuff_documents_chain
         from src.prompt import SYSTEM_PROMPT, CONTEXTUALIZE_Q_SYSTEM_PROMPT
+
 
         llm = ChatGoogleGenerativeAI(
             model=gemini_model_choice,
