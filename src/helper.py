@@ -103,7 +103,9 @@ def download_embedding(model_name: str = "sentence-transformers/all-MiniLM-L6-v2
     except Exception:
         # Fallback to langchain_community if langchain_huggingface local is unavailable
         try:
-            from langchain_community.embeddings import HuggingFaceEmbeddings as CommunityHFEmbeddings
+            import importlib
+            community_embeddings = importlib.import_module("langchain_community.embeddings")
+            CommunityHFEmbeddings = community_embeddings.HuggingFaceEmbeddings
             return CommunityHFEmbeddings(
                 model_name=model_name,
                 model_kwargs={"device": "cpu"},

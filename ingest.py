@@ -24,8 +24,9 @@ def ingest_to_chroma(chunks, embeddings, persist_dir: str = "vectorstore"):
         from langchain_chroma import Chroma
     except ImportError:
         try:
-            from langchain_community.vectorstores import Chroma
-        except ImportError:
+            import importlib
+            Chroma = importlib.import_module("langchain_community.vectorstores").Chroma
+        except Exception:
             print("Error: 'chromadb' or 'langchain-chroma' is not installed.")
             print("Run: pip install langchain-chroma chromadb")
             sys.exit(1)
