@@ -85,39 +85,40 @@ def chunk_documents(
 
 
 def download_embedding(model_name: str = "sentence-transformers/all-MiniLM-L6-v2"):
-    """
-    Initializes HuggingFace Embeddings.
-    Prioritizes local HuggingFaceEmbeddings (completely free, zero API key required).
-    Falls back to HuggingFaceEndpointEmbeddings if an endpoint token is configured.
-    """
-    hf_token = os.getenv("HUGGINGFACE_KEY")
-    
-    # Try local fast embedding first (standard sentence-transformers)
+    """Create the configured embedding client for indexing and retrieval."""
+    provider = os.getenv("EMBEDDING_PROVIDER", "local").strip().lower()
+
+    if provider == "gemini":
+        api_key = os.getenv("GEMINI_API_KEY")
+        if not api_key:
+            raise RuntimeError(
+                "GEMINI_API_KEY is required when EMBEDDING_PROVIDER=gemini."
+            )
+
+        from langchain_google_genai import GoogleGenerativeAIEmbeddings
+
+        return GoogleGenerativeAIEmbeddings(
+            model=os.getenv("GEMINI_EMBEDDING_MODEL", "gemini-embedding-001"),
+            google_api_key=api_key,
+        )
+
+    if provider != "local":
+        raise ValueError(
+            f"Unsupported EMBEDDING_PROVIDER '{provider}'. Use 'local' or 'gemini'."
+        )
+
     try:
         from langchain_huggingface import HuggingFaceEmbeddings
-        return HuggingFaceEmbeddings(
-            model_name=model_name,
-            model_kwargs={"device": "cpu"},
-            encode_kwargs={"normalize_embeddings": True}
-        )
-    except Exception:
-        # Fallback to langchain_community if langchain_huggingface local is unavailable
+    except ImportError:
         try:
-            import importlib
-            community_embeddings = importlib.import_module("langchain_community.embeddings")
-            CommunityHFEmbeddings = community_embeddings.HuggingFaceEmbeddings
-            return CommunityHFEmbeddings(
-                model_name=model_name,
-                model_kwargs={"device": "cpu"},
-                encode_kwargs={"normalize_embeddings": True}
-            )
-        except Exception:
-            if hf_token:
-                from langchain_huggingface import HuggingFaceEndpointEmbeddings
-                return HuggingFaceEndpointEmbeddings(
-                    model=model_name,
-                    huggingfacehub_api_token=hf_token
-                )
+            from langchain_community.embeddings import HuggingFaceEmbeddings
+        except ImportError as error:
             raise RuntimeError(
-                "Could not initialize HuggingFace embeddings. Please ensure 'sentence-transformers' is installed."
-            )
+                "Local embeddings require the 'langchain-huggingface' package."
+            ) from error
+
+    return HuggingFaceEmbeddings(
+        model_name=model_name,
+        model_kwargs={"device": "cpu"},
+        encode_kwargs={"normalize_embeddings": True},
+    )

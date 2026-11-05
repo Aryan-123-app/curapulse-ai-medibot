@@ -130,6 +130,12 @@ def main():
         default=os.getenv("PINECONE_INDEX_NAME", "curapulse-medical"),
         help="Pinecone index name (default: 'curapulse-medical')"
     )
+    parser.add_argument(
+        "--persist-dir",
+        type=str,
+        default=os.getenv("CHROMA_PERSIST_DIR", "vectorstore"),
+        help="Chroma directory (default: CHROMA_PERSIST_DIR or 'vectorstore')"
+    )
 
     args = parser.parse_args()
 
@@ -150,12 +156,12 @@ def main():
     chunks = chunk_documents(cleaned_docs, chunk_size=1000, chunk_overlap=150)
 
     # 4. Initialize embedding model
-    print("\nLoading embedding model (sentence-transformers/all-MiniLM-L6-v2)...")
+    print(f"\nInitializing embeddings with provider '{os.getenv('EMBEDDING_PROVIDER', 'local')}'...")
     embeddings = download_embedding()
 
     # 5. Store embeddings
     if args.store == "chroma":
-        ingest_to_chroma(chunks, embeddings, persist_dir="vectorstore")
+        ingest_to_chroma(chunks, embeddings, persist_dir=args.persist_dir)
     elif args.store == "pinecone":
         ingest_to_pinecone(chunks, embeddings, index_name=args.index_name)
 

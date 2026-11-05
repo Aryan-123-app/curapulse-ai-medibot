@@ -15,7 +15,12 @@ def load_retriever(k: int = 4):
     """Load the local Chroma retriever once for the API process."""
     from src.helper import download_embedding
 
-    persist_dir = PROJECT_ROOT / "vectorstore"
+    configured_dir = Path(os.getenv("CHROMA_PERSIST_DIR", "vectorstore"))
+    persist_dir = (
+        configured_dir
+        if configured_dir.is_absolute()
+        else PROJECT_ROOT / configured_dir
+    )
     if not persist_dir.is_dir() or not any(persist_dir.iterdir()):
         raise FileNotFoundError(
             "Local Chroma vector store not found. Run `python ingest.py --store chroma` first."

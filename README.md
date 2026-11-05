@@ -150,7 +150,7 @@ CuraPulse-AI/
 ## 🚀 Quickstart Guide
 
 ### 1. Prerequisites
-* **Python**: 3.12.10 (recommended for local development and deployment)
+* **Python**: 3.12.16 (recommended for local development and deployment)
 * **Node.js**: 20.9 or higher
 * **Google Gemini API Key**: Obtain a free key from [Google AI Studio](https://aistudio.google.com/app/apikey).
 
@@ -185,6 +185,9 @@ GEMINI_API_KEY=AIzaSy...your_gemini_api_key_here
 VECTOR_STORE_TYPE=chroma
 NEXT_PUBLIC_API_URL=http://localhost:8000
 FRONTEND_ORIGINS=http://localhost:3000
+EMBEDDING_PROVIDER=local
+GEMINI_EMBEDDING_MODEL=gemini-embedding-001
+CHROMA_PERSIST_DIR=vectorstore
 
 # Optional: Only required if using cloud Pinecone
 PINECONE_API_KEY=your_pinecone_key_here
@@ -206,6 +209,24 @@ python ingest.py --store chroma
 ```
 
 *(Optional fast test mode: `python ingest.py --store chroma --limit 50`)*
+
+For a low-memory backend such as Render's free instance, use Gemini-hosted embeddings instead of loading the local Sentence Transformers model. The Gemini Developer API currently lists text embedding input as free of charge on its Free tier, subject to quotas; Free-tier content may be used to improve Google products. Do not send personal or sensitive health information unless that data use is appropriate for your deployment.
+
+Set these values in the root `.env` before building the index:
+
+```ini
+EMBEDDING_PROVIDER=gemini
+GEMINI_EMBEDDING_MODEL=gemini-embedding-001
+CHROMA_PERSIST_DIR=vectorstore-gemini
+```
+
+Then rebuild into a separate directory so the existing local-model index is preserved:
+
+```bash
+python ingest.py --store chroma --persist-dir vectorstore-gemini
+```
+
+Commit and push the generated `vectorstore-gemini` directory. In Render, set the same three environment variables and ensure `GEMINI_API_KEY` is configured. Both ingestion and runtime retrieval must use the same embedding provider, model, and Chroma directory. If the Gemini free-tier quota is unavailable or exhausted, embedding requests will fail until the quota resets or billing is enabled.
 
 ### 5. Launch Application
 
