@@ -150,7 +150,7 @@ CuraPulse-AI/
 ## 🚀 Quickstart Guide
 
 ### 1. Prerequisites
-* **Python**: 3.10 or higher
+* **Python**: 3.12.10 (recommended for local development and deployment)
 * **Node.js**: 20.9 or higher
 * **Google Gemini API Key**: Obtain a free key from [Google AI Studio](https://aistudio.google.com/app/apikey).
 
