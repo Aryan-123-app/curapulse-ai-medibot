@@ -1,5 +1,7 @@
 "use client";
 
+// use client
+
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent, KeyboardEvent, ReactNode } from "react";
 import Image from "next/image";
