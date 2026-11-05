@@ -1,5 +1,7 @@
-# Core Framework & Web UI
+# Python backend and legacy Streamlit UI
 streamlit>=1.35.0
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
 python-dotenv>=1.0.0
 pypdf>=5.0.0
 

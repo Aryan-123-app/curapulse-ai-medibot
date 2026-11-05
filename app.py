@@ -47,14 +47,16 @@ def render_html(html_str: str):
     st.markdown(cleaned, unsafe_allow_html=True)
 
 
-# Load DNA image as base64 for high-performance rendering
+# Load hero visual as base64 for high-performance rendering
 def get_image_base64(image_path: str) -> str:
     if os.path.exists(image_path):
         with open(image_path, "rb") as f:
             return base64.b64encode(f.read()).decode("utf-8")
     return ""
 
-dna_b64 = get_image_base64("assets/dna_helix.jpg")
+hero_visual_b64 = get_image_base64(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "curapulse-hero-visual.jpeg")
+)
 
 
 # High-Contrast Design System matching the reference image
@@ -168,116 +170,122 @@ render_html("""
         margin: 0 !important;
     }
 
-    /* Hero Ambient Blurred Graphic Background matching reference image */
-    .hero-container {
-        position: relative;
-        text-align: center;
-        padding: 1rem 0 2rem 0;
-        overflow: visible;
+    /* Split medical-AI hero inspired by the supplied CuraPulse reference */
+    div[data-testid="stHorizontalBlock"]:has(.hero-copy-panel) {
+        align-items: center !important;
+        background: #C5D1DE !important;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 8px;
+        box-shadow: 0 28px 55px rgba(30, 50, 70, 0.16);
+        margin-top: 0.5rem;
+        padding: 2.5rem 1.75rem 2rem;
+        min-height: 455px;
     }
-    .hero-glow-left {
-        position: absolute;
-        top: -40px;
-        left: -40px;
-        width: 480px;
-        height: 440px;
-        background: radial-gradient(circle at 35% 35%, rgba(6, 182, 212, 0.42) 0%, rgba(56, 189, 248, 0.28) 40%, rgba(255, 255, 255, 0) 72%);
-        filter: blur(55px);
-        pointer-events: none;
-        z-index: 0;
+    .hero-copy-panel {
+        padding: 0.5rem 0.4rem 0.5rem 0.75rem;
     }
-    .hero-glow-right {
-        position: absolute;
-        top: -30px;
-        right: -40px;
-        width: 500px;
-        height: 440px;
-        background: radial-gradient(circle at 65% 35%, rgba(99, 102, 241, 0.28) 0%, rgba(56, 189, 248, 0.25) 45%, rgba(255, 255, 255, 0) 72%);
-        filter: blur(60px);
-        pointer-events: none;
-        z-index: 0;
-    }
-    .hero-glow-center {
-        position: absolute;
-        top: -20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 760px;
-        height: 340px;
-        background: radial-gradient(ellipse 70% 55% at 50% 45%, rgba(0, 163, 255, 0.26) 0%, rgba(186, 230, 253, 0.16) 45%, rgba(255, 255, 255, 0) 75%);
-        filter: blur(48px);
-        pointer-events: none;
-        z-index: 0;
-    }
-
-    /* Dotted Arch Wave Graphic */
-    .hero-wave-graphic {
-        position: absolute;
-        top: -15px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 860px;
-        height: 220px;
-        opacity: 0.55;
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    /* Centered Pill Badge */
-    .center-pill-wrapper {
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        margin-top: 1rem;
-        margin-bottom: 1.25rem;
-    }
-    .center-badge-pill {
+    .hero-kicker {
         display: inline-block;
-        padding: 8px 24px;
+        padding: 7px 13px;
+        border: 1px solid rgba(255, 255, 255, 0.7);
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.95) !important;
-        border: 1.5px solid #E2E8F0 !important;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+        background: rgba(247, 251, 255, 0.82);
+        color: #273545 !important;
+        font-size: 0.74rem;
+        font-weight: 600;
+        margin-bottom: 0.8rem;
+    }
+    .hero-title {
+        color: #0A0D12 !important;
+        font-family: 'Plus Jakarta Sans', sans-serif !important;
+        font-size: clamp(2.6rem, 5vw, 4rem) !important;
+        font-weight: 500 !important;
+        letter-spacing: -2.5px !important;
+        line-height: 1.02 !important;
+        margin: 0 0 0.8rem !important;
+    }
+    .hero-description {
+        color: #202B37 !important;
         font-size: 0.88rem !important;
-        font-weight: 600 !important;
-        color: #1E293B !important;
-        letter-spacing: -0.2px;
-        backdrop-filter: blur(10px);
+        line-height: 1.5 !important;
+        max-width: 430px;
+        margin: 0 0 1.25rem !important;
     }
-
-    /* Main Hero Headline */
-    .hero-heading-box {
+    .hero-art-panel {
         position: relative;
-        z-index: 2;
-        text-align: center;
-        margin-bottom: 2.5rem;
+        min-height: 355px;
+        border-radius: 12px;
+        background-color: #C5D1DE;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
     }
-    .hero-title-main {
-        font-family: 'Plus Jakarta Sans', sans-serif !important;
-        font-size: 5rem !important;
-        font-weight: 800 !important;
-        letter-spacing: -2.8px !important;
-        line-height: 1.05 !important;
-        color: #0F172A !important;
-        margin: 0 !important;
+    .hero-treatment-card {
+        position: absolute;
+        left: 12%;
+        bottom: 1%;
+        padding: 0.65rem 0.9rem;
+        border: 1px solid rgba(255, 255, 255, 0.75);
+        border-radius: 14px;
+        background: rgba(239, 246, 252, 0.84);
+        box-shadow: 0 8px 24px rgba(38, 57, 78, 0.12);
+        backdrop-filter: blur(10px);
+        color: #17212C !important;
+        font-size: 0.72rem;
+        line-height: 1.35;
     }
-    .hero-title-sub {
-        font-family: 'Plus Jakarta Sans', sans-serif !important;
-        font-size: 5rem !important;
-        font-weight: 800 !important;
-        letter-spacing: -2.8px !important;
-        line-height: 1.15 !important;
-        color: #0F172A !important;
-        margin: 0 !important;
+    .hero-treatment-card strong {
+        color: #101820 !important;
+        font-size: 0.92rem;
     }
-    .accent-care {
-        color: #00A3FF !important;
+    .hero-proof {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 1.4rem;
+        color: #4B5968 !important;
+        font-size: 0.75rem;
+        line-height: 1.4;
     }
-    .ai-symbol {
-        font-weight: 800 !important;
-        font-size: 5rem !important;
-        letter-spacing: -2px !important;
-        color: #0F172A !important;
+    .hero-proof strong {
+        color: #1B2631 !important;
+    }
+    .hero-proof-avatars {
+        font-size: 1.35rem;
+        letter-spacing: -0.55rem;
+        padding-right: 0.45rem;
+        white-space: nowrap;
+    }
+    .hero-secondary-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 44px;
+        border: 1px solid rgba(30, 41, 59, 0.25);
+        border-radius: 999px;
+        color: #101820 !important;
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-decoration: none !important;
+    }
+    .hero-secondary-link:hover {
+        background: rgba(255, 255, 255, 0.4);
+    }
+    @media (max-width: 760px) {
+        div[data-testid="stHorizontalBlock"]:has(.hero-copy-panel) {
+            padding: 1.5rem 1rem;
+            min-height: 0;
+        }
+        .hero-copy-panel {
+            padding: 0.2rem;
+        }
+        .hero-title {
+            font-size: clamp(2.5rem, 11vw, 3.5rem) !important;
+            letter-spacing: -1.8px !important;
+        }
+        .hero-art-panel {
+            min-height: 260px;
+        }
     }
 
     /* Search Input Styling */
@@ -302,90 +310,6 @@ render_html("""
     div[data-testid="stTextInput"] input::placeholder {
         color: #64748B !important;
         opacity: 1 !important;
-    }
-
-    /* Floating Consultation Pill (Left over DNA) */
-    .floating-consult-pill {
-        position: absolute;
-        top: 25px;
-        left: 20px;
-        background: #FFFFFF !important;
-        border: 1.5px solid #E2E8F0 !important;
-        border-radius: 999px;
-        padding: 10px 20px;
-        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        z-index: 10;
-    }
-    .floating-consult-text {
-        font-size: 0.88rem !important;
-        font-weight: 700 !important;
-        color: #0F172A !important;
-        line-height: 1.25;
-    }
-    .floating-arrow-btn {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background: #E0F2FE !important;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #0284C7 !important;
-        font-weight: 800 !important;
-        font-size: 0.95rem;
-    }
-
-    /* Right column content ("Live well, Be Well") */
-    .right-content-heading {
-        font-family: 'Plus Jakarta Sans', sans-serif !important;
-        font-size: 2.1rem !important;
-        font-weight: 800 !important;
-        color: #0F172A !important;
-        margin-bottom: 0.85rem !important;
-        letter-spacing: -0.5px !important;
-    }
-    .right-content-desc {
-        font-size: 1.05rem !important;
-        line-height: 1.65 !important;
-        color: #334155 !important;
-        margin-bottom: 1.75rem !important;
-    }
-
-    /* Avatar stack */
-    .avatar-stack-wrapper {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        margin-bottom: 1.5rem;
-    }
-    .avatar-group {
-        display: flex;
-        align-items: center;
-    }
-    .avatar-circle {
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        border: 2.5px solid #FFFFFF;
-        object-fit: cover;
-        margin-left: -10px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-    }
-    .avatar-circle:first-child {
-        margin-left: 0;
-    }
-    .avatar-proof-text {
-        font-size: 0.92rem !important;
-        color: #1E293B !important;
-        line-height: 1.35;
-    }
-    .avatar-proof-num {
-        font-weight: 800 !important;
-        font-size: 1.1rem !important;
-        color: #0F172A !important;
     }
 
     /* Solid High-Contrast Black Pill Buttons */
@@ -682,112 +606,76 @@ if st.session_state.app_mode == "landing":
             st.session_state.app_mode = "chat"
             st.rerun()
 
-    # Spacious breathing room below navbar before hero graphics start
-    st.markdown("<div style='margin-bottom: 2.75rem;'></div>", unsafe_allow_html=True)
-
-    # Hero Section with Luminous Blurred Mesh Background & Dotted Arch
-    render_html("""
-    <div class="hero-container">
-        <div class="hero-glow-left"></div>
-        <div class="hero-glow-right"></div>
-        <div class="hero-glow-center"></div>
-        <svg class="hero-wave-graphic" viewBox="0 0 900 220" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M 40 40 Q 450 200 860 40" stroke="#00A3FF" stroke-width="2.0" stroke-dasharray="3 8" opacity="0.65"/>
-            <path d="M 100 40 Q 450 170 800 40" stroke="#38BDF8" stroke-width="1.6" stroke-dasharray="2 7" opacity="0.5"/>
-            <path d="M 160 40 Q 450 140 740 40" stroke="#0284C7" stroke-width="1.3" stroke-dasharray="2 6" opacity="0.4"/>
-            <path d="M 220 40 Q 450 110 680 40" stroke="#7DD3FC" stroke-width="1.0" stroke-dasharray="2 5" opacity="0.32"/>
-            <path d="M 280 40 Q 450 85 620 40" stroke="#BAE6FD" stroke-width="0.9" stroke-dasharray="1 5" opacity="0.25"/>
-        </svg>
-        <div class="center-pill-wrapper">
-            <span class="center-badge-pill">World's Most Grounded Healthcare AI</span>
-        </div>
-        <div class="hero-heading-box">
-            <div class="hero-title-main">Revolutionizing</div>
-            <div class="hero-title-sub">Health<span class="accent-care">care</span> with <span class="ai-symbol">AI</span></div>
-        </div>
-    </div>
-    """)
-
-    # Floating Search Capsule
-    sc1, sc2, sc3 = st.columns([1, 5, 1])
-    with sc2:
-        query_col_input, query_col_btn = st.columns([3, 1])
-        with query_col_input:
-            user_direct_q = st.text_input(
-                label="Search clinical topic",
-                placeholder="📍 Enter condition or symptom (e.g., Cancer, Diabetes, Asthma)...",
-                label_visibility="collapsed"
-            )
-        with query_col_btn:
-            if st.button("Launch Assistant →", key="capsule_launch_btn", use_container_width=True):
-                if user_direct_q.strip():
-                    st.session_state.pending_prompt = user_direct_q.strip()
-                st.session_state.app_mode = "chat"
-                st.rerun()
-
-    st.markdown("<br><br>", unsafe_allow_html=True)
-
-    # Lower Grid Layout (DNA Helix Left + "Live well, Be Well" Right)
-    grid_left, grid_right = st.columns([5, 5])
-
-    with grid_left:
-        # 3D Blue DNA Helix from generated asset
-        if dna_b64:
-            render_html(f"""
-            <div style="position: relative; border-radius: 28px; overflow: hidden; background: #F8FAFC; border: 1.5px solid #E2E8F0; height: 350px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.04);">
-                <div class="floating-consult-pill">
-                    <div class="floating-consult-text">Timely care with verified<br>citations & consultation</div>
-                    <div class="floating-arrow-btn">→</div>
-                </div>
-                <img src="data:image/jpeg;base64,{dna_b64}" style="width: 100%; height: 100%; object-fit: cover;" alt="3D DNA Helix" />
-            </div>
-            """)
-        else:
-            render_html("""
-            <div style="border-radius: 28px; background: linear-gradient(135deg, #E0F2FE 0%, #BAE6FD 100%); height: 350px; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #0284C7;">
-                🧬 3D DNA Model
-            </div>
-            """)
-
-    with grid_right:
+    # Hero Section
+    hero_left, hero_right = st.columns([1, 1.05], gap="small", vertical_alignment="center")
+    with hero_left:
         render_html("""
-        <div style="padding: 1.5rem 1rem 1rem 1.5rem;">
-            <div class="right-content-heading">Live well, Be Well</div>
-            <p class="right-content-desc">
-                Join us in revolutionizing healthcare. Our AI tools empower you to live well by providing 
-                personalized and verified clinical knowledge. Step into a future where your health is guided 
-                by precision, literature grounding, and innovation.
+        <div class="hero-copy-panel">
+            <span class="hero-kicker">World's Most Grounded Healthcare AI</span>
+            <h1 class="hero-title">Revolutionizing<br>Healthcare with<br>AI</h1>
+            <p class="hero-description">
+                Redefine healthcare with AI. Experience faster diagnostics and precisely tailored
+                treatments, grounded in trusted medical literature. Bridge cutting-edge technology
+                with thoughtful, human-centered care.
             </p>
-            <div class="avatar-stack-wrapper">
-                <div class="avatar-group">
-                    <img class="avatar-circle" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop&crop=faces" alt="Avatar">
-                    <img class="avatar-circle" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=faces" alt="Avatar">
-                    <img class="avatar-circle" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop&crop=faces" alt="Avatar">
-                    <img class="avatar-circle" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&fit=crop&crop=faces" alt="Avatar">
-                    <img class="avatar-circle" src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=80&h=80&fit=crop&crop=faces" alt="Avatar">
-                </div>
-                <div class="avatar-proof-text">
-                    <span class="avatar-proof-num">3,282+</span><br>
-                    Verified clinical nodes (637 pages)
-                </div>
-            </div>
         </div>
         """)
 
-        st.markdown("<br>", unsafe_allow_html=True)
-        # Quick launcher buttons
-        col_q1, col_q2 = st.columns(2)
-        with col_q1:
-            if st.button("🧬 Ask: What is cancer?", key="q_btn_cancer", use_container_width=True):
-                st.session_state.pending_prompt = "What is cancer, what are its fundamental cellular characteristics, and how is staging determined?"
+        hero_action, hero_secondary = st.columns([1, 1])
+        with hero_action:
+            if st.button("Launch Assistant →", key="hero_launch_btn", use_container_width=True):
                 st.session_state.app_mode = "chat"
                 st.rerun()
+        with hero_secondary:
+            render_html('<a class="hero-secondary-link" href="#services">Explore services</a>')
 
-        with col_q2:
-            if st.button("🩸 Ask: Diabetes diagnosis", key="q_btn_diabetes", use_container_width=True):
-                st.session_state.pending_prompt = "What diagnostic blood tests and thresholds are used for Diabetes Mellitus, and what are key precautions?"
-                st.session_state.app_mode = "chat"
-                st.rerun()
+        render_html("""
+        <div class="hero-proof">
+            <span class="hero-proof-avatars">👩🏻‍⚕️ 👨🏽‍⚕️ 👩🏼‍⚕️</span>
+            <span>Trusted by clinicians and patients<br><strong>3,282+ verified clinical nodes</strong></span>
+        </div>
+        """)
+
+    with hero_right:
+        if hero_visual_b64:
+            art_background = f"url('data:image/jpeg;base64,{hero_visual_b64}')"
+        else:
+            art_background = "linear-gradient(135deg, #DCE7F1, #B8CBDD)"
+        render_html(f"""
+        <div class="hero-art-panel" role="img" aria-label="AI-powered robotic healthcare assistant">
+            <div style="position:absolute;inset:0;background-image:{art_background};background-repeat:no-repeat;background-position:center;background-size:contain;"></div>
+            <div class="hero-treatment-card"><strong>5,000+</strong><br>Successful treatments</div>
+        </div>
+        """)
+
+    st.markdown("<div style='height: 1rem;'></div>", unsafe_allow_html=True)
+
+    # Keep direct clinical-topic search available below the hero.
+    search_col, search_button_col = st.columns([4, 1])
+    with search_col:
+        user_direct_q = st.text_input(
+            label="Search clinical topic",
+            placeholder="Enter a condition or symptom (e.g., cancer, diabetes, asthma)...",
+            label_visibility="collapsed"
+        )
+    with search_button_col:
+        if st.button("Ask CuraPulse →", key="capsule_launch_btn", use_container_width=True):
+            if user_direct_q.strip():
+                st.session_state.pending_prompt = user_direct_q.strip()
+            st.session_state.app_mode = "chat"
+            st.rerun()
+
+    quick_col_1, quick_col_2 = st.columns(2)
+    with quick_col_1:
+        if st.button("🧬 Ask: What is cancer?", key="q_btn_cancer", use_container_width=True):
+            st.session_state.pending_prompt = "What is cancer, what are its fundamental cellular characteristics, and how is staging determined?"
+            st.session_state.app_mode = "chat"
+            st.rerun()
+    with quick_col_2:
+        if st.button("🩸 Ask: Diabetes diagnosis", key="q_btn_diabetes", use_container_width=True):
+            st.session_state.pending_prompt = "What diagnostic blood tests and thresholds are used for Diabetes Mellitus, and what are key precautions?"
+            st.session_state.app_mode = "chat"
+            st.rerun()
 
     # =====================================================================
     # SECTION 2: ABOUT CURAPULSE (#about)

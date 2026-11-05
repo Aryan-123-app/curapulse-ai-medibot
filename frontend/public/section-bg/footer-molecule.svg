@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="420" viewBox="0 0 1600 420" fill="none">
+  <defs>
+    <linearGradient id="base" x1="0" y1="0" x2="1600" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D3333"/>
+      <stop offset=".48" stop-color="#10413D"/>
+      <stop offset="1" stop-color="#0A302F"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="matrix(-620 350 -350 -620 1400 45)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4F9B7C" stop-opacity=".38"/>
+      <stop offset="1" stop-color="#4F9B7C" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="thread" x1="1000" y1="0" x2="1600" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B5E4CB" stop-opacity=".48"/>
+      <stop offset="1" stop-color="#83C9AC" stop-opacity=".12"/>
+    </linearGradient>
+    <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#D9F0E4" fill-opacity=".16"/>
+    </pattern>
+  </defs>
+  <path fill="url(#base)" d="M0 0h1600v420H0z"/>
+  <path fill="url(#glow)" d="M0 0h1600v420H0z"/>
+  <path fill="url(#dots)" d="M0 0h1600v420H0z"/>
+  <g stroke="url(#thread)" stroke-width="2">
+    <path d="m1218 62 91 52 1 105-90 53-92-53-1-105 91-52Z"/>
+    <path d="m1310 114 91-52 91 53v104l-90 53-92-53"/>
+    <path d="m1127 219 1 105 92 53 89-53"/>
+    <path d="m1492 219 91 53v105"/>
+    <path d="m1401 62 1-105 90-52 91 53"/>
+    <path d="M1218 62 1093 6l-95 54v108l129 54m274-156 120-64 91 53v109l-120 55"/>
+    <path d="m1310 219 91 53 1 104-90 53-92-53v-104"/>
+  </g>
+  <g fill="#BCE6D1" fill-opacity=".72">
+    <circle cx="1218" cy="62" r="6"/><circle cx="1309" cy="114" r="5"/>
+    <circle cx="1220" cy="272" r="6"/><circle cx="1401" cy="62" r="6"/>
+    <circle cx="1492" cy="219" r="6"/><circle cx="1127" cy="219" r="5"/>
+    <circle cx="998" cy="60" r="5"/><circle cx="1583" cy="324" r="5"/>
+  </g>
+  <g stroke="#B7E2CD" stroke-opacity=".12">
+    <circle cx="1344" cy="206" r="170"/><circle cx="1344" cy="206" r="205"/>
+    <circle cx="1344" cy="206" r="240"/>
+  </g>
+</svg>

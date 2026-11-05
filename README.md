@@ -6,7 +6,7 @@
 [![LangChain](https://img.shields.io/badge/Orchestration-LangChain%200.3-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white)](https://www.langchain.com/)
 [![Google Gemini](https://img.shields.io/badge/LLM-Gemini%202.5%20Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
 [![ChromaDB](https://img.shields.io/badge/Vector_DB-ChromaDB%20Local-FF6F00?style=for-the-badge&logo=database&logoColor=white)](https://www.trychroma.com/)
-[![Streamlit](https://img.shields.io/badge/Frontend-Streamlit%20Interactive-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
+[![Next.js](https://img.shields.io/badge/Frontend-Next.js%20%2B%20CSS-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-00A3FF?style=for-the-badge)](LICENSE)
 
 <br/>
@@ -95,7 +95,7 @@ The system indexes **637 pages (3,282 dense vector chunks)** from *The Gale Ency
 | **Embeddings Model** | **sentence-transformers/all-MiniLM-L6-v2** | 384-dimensional dense vectors running locally on CPU with zero inference costs or rate limits. |
 | **Vector Store** | **ChromaDB Local Engine** | Fully local, persistent SQLite + HNSW indexing ensuring sub-200ms vector lookups. |
 | **Orchestration** | **LangChain 0.3 / Core Chains** | Modular document loading, recursive chunking, and contextual history reformulations. |
-| **Frontend UI/UX** | **Streamlit + Custom Vanilla CSS** | Custom Apple-inspired design system with radiant blurred mesh orbs, smooth transitions, and high-contrast typography. |
+| **Frontend UI/UX** | **Next.js + Custom CSS** | Responsive healthcare landing page and clinical chat interface, connected to the existing Python RAG backend. |
 | **Clinical Literature** | **The Gale Encyclopedia of Medicine** | Authoritative 637-page peer-reviewed medical corpus covering 1,700+ conditions and clinical protocols. |
 
 ---
@@ -117,23 +117,30 @@ The system indexes **637 pages (3,282 dense vector chunks)** from *The Gale Ency
 ```text
 CuraPulse-AI/
 ├── assets/
+│   ├── curapulse hero.jpeg   # CuraPulse hero reference artwork
+│   ├── curapulse-hero-visual.jpeg # Cropped robot/brain hero visual
 │   └── dna_helix.jpg         # High-resolution 3D translucent blue DNA double helix
 ├── data/
 │   └── Medical_book.pdf      # Authoritative clinical knowledge corpus (637 pages)
 ├── src/
 │   ├── __init__.py           # Package initializer
 │   ├── helper.py             # PDF ETL loader, text chunker & embedding downloader
-│   └── prompt.py             # Grounded clinical prompt templates & safety rules
+│   ├── prompt.py             # Grounded clinical prompt templates & safety rules
+│   └── rag.py                # Shared Chroma/Gemini RAG answer generation
+├── frontend/
+│   ├── app/                  # Next.js landing page, chat UI, and responsive CSS
+│   ├── public/               # Frontend image assets
+│   ├── .env.example          # Optional frontend API endpoint
+│   └── package.json          # Next.js frontend dependencies and scripts
 ├── .env.example              # Environment variables template
 ├── .gitignore                # Production ignore patterns for keys & stores
-├── .streamlit/
-│   └── config.toml           # Streamlit UI theme token overrides
-├── app.py                    # Dual-mode Streamlit showcase & conversational clinical assistant
+├── app.py                    # Legacy Streamlit interface
+├── backend_api.py            # FastAPI bridge to the existing Python RAG backend
 ├── ingest.py                 # Multi-store indexing CLI (ChromaDB / Pinecone)
 ├── ingest.bat                # 1-click Windows automated ingestion wrapper
 ├── run.bat                   # 1-click Windows web application launcher
 ├── pyrightconfig.json        # Static type checking & Pyright configuration
-├── requirements.txt          # Production dependencies
+├── requirements.txt          # Python backend dependencies
 ├── setup.py                  # Package configuration & metadata
 └── README.md                 # Project documentation
 ```
@@ -144,6 +151,7 @@ CuraPulse-AI/
 
 ### 1. Prerequisites
 * **Python**: 3.10 or higher
+* **Node.js**: 20.9 or higher
 * **Google Gemini API Key**: Obtain a free key from [Google AI Studio](https://aistudio.google.com/app/apikey).
 
 ### 2. Installation & Setup
@@ -162,6 +170,11 @@ source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
+
+# Install the Next.js frontend
+cd frontend
+npm install
+cd ..
 ```
 
 ### 3. Configure Environment Variables
@@ -170,11 +183,15 @@ Create a `.env` file in the project root:
 ```ini
 GEMINI_API_KEY=AIzaSy...your_gemini_api_key_here
 VECTOR_STORE_TYPE=chroma
+NEXT_PUBLIC_API_URL=http://localhost:8000
+FRONTEND_ORIGINS=http://localhost:3000
 
 # Optional: Only required if using cloud Pinecone
 PINECONE_API_KEY=your_pinecone_key_here
 PINECONE_INDEX_NAME=curapulse-medical
 ```
+
+The Next.js app uses `http://localhost:8000` for the Python API by default. For a different API URL, copy `frontend/.env.example` to `frontend/.env.local` and update `NEXT_PUBLIC_API_URL`.
 
 ### 4. Index Knowledge Corpus
 
@@ -193,13 +210,15 @@ python ingest.py --store chroma
 ### 5. Launch Application
 
 ```bash
-# On Windows (Automated 1-Click):
+# On Windows (with the Python environment activated):
 .\run.bat
 
-# Or directly via Streamlit:
-streamlit run app.py
+# Or start the Python API and Next.js frontend in separate terminals:
+python -m uvicorn backend_api:app --reload --port 8000
+cd frontend
+npm run dev
 ```
-Open **`http://localhost:8501`** in your browser to explore the platform.
+Open **`http://localhost:3000`** in your browser. The Next.js interface uses the existing Python RAG pipeline through the FastAPI service; your Chroma index, Gemini model, prompts, and citations remain in Python.
 
 ---
 

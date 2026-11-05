@@ -214,3 +214,8 @@ __marimo__/
 # vectorstore/
 .streamlit/secrets.toml
 
+# Next.js frontend
+frontend/node_modules/
+frontend/.next/
+frontend/tsconfig.tsbuildinfo
+frontend/npm-debug.log*

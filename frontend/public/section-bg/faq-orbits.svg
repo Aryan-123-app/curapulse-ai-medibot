@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <linearGradient id="base" x1="75" y1="60" x2="1490" y2="890" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5F8F5"/>
+      <stop offset=".56" stop-color="#EDF4F0"/>
+      <stop offset="1" stop-color="#E7F0EC"/>
+    </linearGradient>
+    <radialGradient id="mint" cx="0" cy="0" r="1" gradientTransform="matrix(-560 460 -460 -560 1400 200)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#B2D6C6" stop-opacity=".68"/>
+      <stop offset="1" stop-color="#BBDACD" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="pulse" x1="930" y1="0" x2="1510" y2="600" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#347F6C" stop-opacity=".22"/>
+      <stop offset="1" stop-color="#347F6C" stop-opacity=".06"/>
+    </linearGradient>
+    <pattern id="dots" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1" fill="#327B69" fill-opacity=".09"/>
+    </pattern>
+  </defs>
+  <path fill="url(#base)" d="M0 0h1600v900H0z"/>
+  <path fill="url(#mint)" d="M0 0h1600v900H0z"/>
+  <path fill="url(#dots)" d="M0 0h1600v900H0z"/>
+  <g stroke="#347F6C" stroke-opacity=".16">
+    <circle cx="1350" cy="310" r="190"/><circle cx="1350" cy="310" r="222"/>
+    <circle cx="1350" cy="310" r="254"/><circle cx="1350" cy="310" r="286"/>
+  </g>
+  <g opacity=".9">
+    <circle cx="1350" cy="310" r="116" fill="#DCEBE2" fill-opacity=".35" stroke="#347F6C" stroke-opacity=".2" stroke-width="3"/>
+    <path d="M1268 310h47l20-42 35 91 26-59 18 10h52" stroke="url(#pulse)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M1250 202c54-74 155-74 210 0s54 148 0 222-156 74-210 0-54-148 0-222Z" stroke="#347F6C" stroke-opacity=".28" stroke-width="3"/>
+    <path d="M1434 202c-54-74-155-74-210 0s-54 148 0 222 156 74 210 0 54-148 0-222Z" stroke="#347F6C" stroke-opacity=".24" stroke-width="3"/>
+  </g>
+  <g fill="#347F6C" fill-opacity=".36">
+    <circle cx="1350" cy="201" r="6"/><circle cx="1248" cy="313" r="6"/>
+    <circle cx="1452" cy="313" r="6"/><circle cx="1350" cy="423" r="6"/>
+    <circle cx="1310" cy="310" r="4"/><circle cx="1390" cy="310" r="4"/>
+  </g>
+  <g fill="#5A9A7E" fill-opacity=".12">
+    <circle cx="1488" cy="650" r="74"/><circle cx="1488" cy="650" r="100"/>
+    <circle cx="1095" cy="160" r="45"/><circle cx="1095" cy="160" r="67"/>
+  </g>
+</svg>
